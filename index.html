@@ -8,14 +8,33 @@
 </head>
 <body>
     <header>
-        <nav>
-            <a href="#" class="logo">AI Daily</a>
+        <div class="header-container">
+            <a href="#" class="logo">AI <span>Daily</span></a>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Articles</a></li>
+                <li><a href="#">Categories</a></li>
                 <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#" class="subscribe-btn">Subscribe</a></li>
             </ul>
-        </nav>
+            <div class="search-container">
+                <button class="search-toggle" aria-label="Search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search articles...">
+                    <button class="search-close">&times;</button>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -24,30 +43,49 @@
             <p>Exploring the frontiers of artificial intelligence, one post at a time.</p>
         </section>
 
+        <section class="filters">
+            <div class="category-filters">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="llm">LLMs</button>
+                <button class="filter-btn" data-category="computer-vision">Computer Vision</button>
+                <button class="filter-btn" data-category="ethics">AI Ethics</button>
+                <button class="filter-btn" data-category="tools">Tools</button>
+                <button class="filter-btn" data-category="research">Research</button>
+            </div>
+        </section>
+
         <section class="blog-posts">
-            <article class="post">
+            <article class="post" data-category="computer-vision">
                 <span class="date">April 29, 2026</span>
+                <span class="category-tag">Computer Vision</span>
                 <h2>The Rise of Multimodal AI Systems</h2>
                 <p>How modern AI models are breaking down the barriers between text, image, and audio understanding.</p>
                 <a href="#" class="read-more">Read more →</a>
             </article>
 
-            <article class="post">
+            <article class="post" data-category="llm">
                 <span class="date">April 28, 2026</span>
+                <span class="category-tag">LLMs</span>
                 <h2>LLMs in Production: Lessons Learned</h2>
                 <p>Key takeaways from deploying large language models at scale in real-world applications.</p>
                 <a href="#" class="read-more">Read more →</a>
             </article>
 
-            <article class="post">
+            <article class="post" data-category="tools">
                 <span class="date">April 27, 2026</span>
+                <span class="category-tag">Tools</span>
                 <h2>The Future of Code Generation</h2>
                 <p>Examining how AI is transforming software development workflows and developer productivity.</p>
                 <a href="#" class="read-more">Read more →</a>
             </article>
 
-            <article class="post">
+            <article class="post" data-category="ethics">
                 <span class="date">April 26, 2026</span>
+                <span class="category-tag">AI Ethics</span>
+                <h2>AI Ethics in 2026</h2>
+                <p>The evolving landscape of AI governance and the push for more responsible AI development.</p>
+                <a href="#" class="read-more">Read more →</a>
+            </article>
                 <h2>AI Ethics in 2026</h2>
                 <p>The evolving landscape of AI governance and the push for more responsible AI development.</p>
                 <a href="#" class="read-more">Read more →</a>
@@ -65,5 +103,52 @@
     <footer>
         <p>© 2026 AI Daily. Built with curiosity.</p>
     </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Search Toggle
+        const searchToggle = document.querySelector('.search-toggle');
+        const searchBar = document.querySelector('.search-bar');
+        const searchClose = document.querySelector('.search-close');
+        
+        searchToggle.addEventListener('click', () => {
+            searchBar.classList.toggle('active');
+            searchBar.querySelector('input').focus();
+        });
+        
+        searchClose.addEventListener('click', () => {
+            searchBar.classList.remove('active');
+        });
+
+        // Category Filters
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const posts = document.querySelectorAll('.post');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const category = btn.dataset.category;
+                
+                // Filter posts
+                posts.forEach(post => {
+                    if (category === 'all' || post.dataset.category === category) {
+                        post.style.display = 'block';
+                    } else {
+                        post.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
